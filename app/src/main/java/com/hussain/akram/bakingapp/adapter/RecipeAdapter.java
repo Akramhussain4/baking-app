@@ -1,5 +1,7 @@
 package com.hussain.akram.bakingapp.adapter;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.hussain.akram.bakingapp.R;
+import com.hussain.akram.bakingapp.databinding.LayoutRecipeItemBinding;
 import com.hussain.akram.bakingapp.model.Recipe;
 
 import java.util.List;
@@ -16,6 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
+
+    private static final String TAG = RecipeAdapter.class.getName();
 
     private List<Recipe> mRecipes;
     private RecipeClickListener mRecipeClickListener;
@@ -39,7 +45,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder recipeViewHolder, int i) {
-        recipeViewHolder.recipeName.setText(mRecipes.get(i).getName());
+        recipeViewHolder.binding.setVariable(com.hussain.akram.bakingapp.BR.recipe,mRecipes.get(i));
+        recipeViewHolder.binding.executePendingBindings();
     }
 
     @Override
@@ -49,11 +56,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private final LayoutRecipeItemBinding binding;
         @BindView(R.id.recipeName)
         TextView recipeName;
 
-        private RecipeViewHolder(@NonNull View itemView) {
-            super(itemView);
+        private RecipeViewHolder(final View itemView) {
+            super(itemView.getRootView());
+            binding = DataBindingUtil.bind(itemView);
             ButterKnife.bind(this, itemView);
         }
 

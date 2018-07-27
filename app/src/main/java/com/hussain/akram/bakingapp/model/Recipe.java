@@ -108,7 +108,7 @@ public class Recipe implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(recipeId);
         dest.writeString(name);
-        if (ingredients == null) {
+        if (ingredients  == null) {
             dest.writeByte((byte) (0x00));
         } else {
             dest.writeByte((byte) (0x01));
