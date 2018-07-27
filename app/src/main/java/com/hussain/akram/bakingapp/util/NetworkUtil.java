@@ -60,7 +60,7 @@ public final class NetworkUtil {
         }
         builder.setTitle("No Network!")
                 .setMessage("Check network and try again")
-                .setPositiveButton("Try agian!", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Try again!", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         NetworkUtil.isNetworkAvailable(context);
                         if (!isNetworkAvailable(context)) {

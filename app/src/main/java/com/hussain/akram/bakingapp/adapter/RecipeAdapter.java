@@ -1,7 +1,6 @@
 package com.hussain.akram.bakingapp.adapter;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.databinding.library.baseAdapters.BR;
 import com.hussain.akram.bakingapp.R;
 import com.hussain.akram.bakingapp.databinding.LayoutRecipeItemBinding;
 import com.hussain.akram.bakingapp.model.Recipe;
@@ -23,8 +21,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     private static final String TAG = RecipeAdapter.class.getName();
 
-    private List<Recipe> mRecipes;
-    private RecipeClickListener mRecipeClickListener;
+    private final List<Recipe> mRecipes;
+    private final RecipeClickListener mRecipeClickListener;
 
     public RecipeAdapter(List<Recipe> recipes, RecipeClickListener recipeClickListener) {
         this.mRecipes = recipes;
