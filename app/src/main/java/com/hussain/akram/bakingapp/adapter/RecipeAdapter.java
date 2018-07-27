@@ -1,6 +1,5 @@
 package com.hussain.akram.bakingapp.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,9 +10,7 @@ import android.widget.TextView;
 import com.hussain.akram.bakingapp.R;
 import com.hussain.akram.bakingapp.model.Recipe;
 
-import java.security.PublicKey;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,10 +18,16 @@ import butterknife.ButterKnife;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     private List<Recipe> mRecipes;
+    private RecipeClickListener mRecipeClickListener;
 
-    public RecipeAdapter(List<Recipe> recipes) {
+    public RecipeAdapter(List<Recipe> recipes, RecipeClickListener recipeClickListener) {
         this.mRecipes = recipes;
+        this.mRecipeClickListener = recipeClickListener;
         notifyDataSetChanged();
+    }
+
+    public interface RecipeClickListener {
+        void recipeIndex(int index);
     }
 
     @NonNull
@@ -44,14 +47,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         return mRecipes.size();
     }
 
-    class RecipeViewHolder extends RecyclerView.ViewHolder {
+    class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.recipeName)
         TextView recipeName;
 
         private RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mRecipeClickListener.recipeIndex(getAdapterPosition());
         }
     }
 
