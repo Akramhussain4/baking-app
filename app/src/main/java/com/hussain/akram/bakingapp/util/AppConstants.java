@@ -4,5 +4,6 @@ public final class AppConstants {
 
     public static final String RECIPE_PARCELABLE = "recipe_parcel";
     public static final String RECIPE_BUNDLE = "recipe_bundle";
-
+    public static final String STEPS_PARCELABLE = "steps_parcelable";
+    public static final String STEPS_BUNDLE = "steps_bundle";
 }

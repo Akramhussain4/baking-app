@@ -1,15 +1,15 @@
 package com.hussain.akram.bakingapp.activity;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 
 import com.hussain.akram.bakingapp.R;
-import com.hussain.akram.bakingapp.fragment.RecipeDescription;
-import com.hussain.akram.bakingapp.model.Recipe;
+import com.hussain.akram.bakingapp.fragment.RecipeIngredients;
 import com.hussain.akram.bakingapp.util.AppConstants;
 import com.hussain.akram.bakingapp.util.NetworkUtil;
+
+import butterknife.ButterKnife;
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -20,6 +20,7 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
         b = getIntent().getBundleExtra(AppConstants.RECIPE_BUNDLE);
+        ButterKnife.bind(this);
         checkNetwork();
     }
 
@@ -32,12 +33,11 @@ public class RecipeActivity extends AppCompatActivity {
     }
 
     private void startFragment(){
+        RecipeIngredients recipeIngredients = new RecipeIngredients();
+        recipeIngredients.setArguments(b);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        RecipeDescription recipeDescription = new RecipeDescription();
-        recipeDescription.setArguments(b);
-        fragmentTransaction.add(R.id.fragmentContainer, recipeDescription);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .add(R.id.fragmentContainer, recipeIngredients).commit();
     }
 
 }

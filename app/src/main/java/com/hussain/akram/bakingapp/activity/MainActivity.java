@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
             @Override
             public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 recipe = response.body();
-                RecipeAdapter adapter = new RecipeAdapter(recipe, MainActivity.this);
+                RecipeAdapter adapter = new RecipeAdapter(recipe, getApplicationContext(),MainActivity.this);
                 recyclerView.setAdapter(adapter);
             }
 
