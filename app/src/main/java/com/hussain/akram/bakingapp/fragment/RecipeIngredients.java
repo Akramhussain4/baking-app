@@ -2,6 +2,7 @@ package com.hussain.akram.bakingapp.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.hussain.akram.bakingapp.model.Recipe;
 import com.hussain.akram.bakingapp.model.Steps;
 import com.hussain.akram.bakingapp.util.AppConstants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -81,7 +83,8 @@ public class RecipeIngredients extends Fragment implements StepsAdapter.StepsCli
     @Override
     public void stepClickListener(int index) {
         Intent intent = new Intent(getActivity(), InstructionsActivity.class);
-        intent.putExtra(AppConstants.STEPS_PARCELABLE, stepsList.get(index));
+        intent.putParcelableArrayListExtra(AppConstants.STEPS_PARCELABLE, (ArrayList<? extends Parcelable>) stepsList);
+        intent.putExtra(AppConstants.INDEX, index);
         startActivity(intent);
     }
 }

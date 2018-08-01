@@ -43,6 +43,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:contentDescription="@string/recipe_image_desc"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <RelativeLayout
@@ -72,6 +73,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="8dp"
                         android:layout_marginTop="8dp"
+                        android:contentDescription="@string/serving_icon_desc"
                         android:src="@drawable/ic_silverware" />
 
                     <TextView
