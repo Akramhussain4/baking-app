@@ -1,9 +1,11 @@
 package com.hussain.akram.bakingapp.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        GridLayoutManager layoutManager = new GridLayoutManager(this,getSpan());
         recyclerView.setLayoutManager(layoutManager);
         checkNetwork();
     }
@@ -49,6 +51,14 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
             NetworkUtil.showNetworkAlert(this);
         }
     }
+
+    private int getSpan() {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            return 3;
+        }
+        return 1;
+    }
+
 
     private void getRecipes() {
         final RecipeInterface recipeInterface = NetworkUtil.buildUrl().create(RecipeInterface.class);

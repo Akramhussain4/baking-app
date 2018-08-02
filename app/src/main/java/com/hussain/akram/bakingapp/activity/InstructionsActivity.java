@@ -48,7 +48,7 @@ public class InstructionsActivity extends AppCompatActivity {
         recipeInstruction.setArguments(b);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.fragmentContainer, recipeInstruction)
+                .replace(R.id.instructionFragment, recipeInstruction)
                 .commit();
     }
 

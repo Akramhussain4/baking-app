@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ public class RecipeIngredients extends Fragment implements StepsAdapter.StepsCli
     @BindView(R.id.rvSteps)
     RecyclerView rvSteps;
 
+    private boolean twoPane;
     private Recipe recipe;
     private List<Steps> stepsList;
 
@@ -55,6 +57,7 @@ public class RecipeIngredients extends Fragment implements StepsAdapter.StepsCli
         super.onStart();
         if (this.getArguments() != null) {
             recipe = this.getArguments().getParcelable(AppConstants.RECIPE_PARCELABLE);
+            twoPane = this.getArguments().getBoolean(AppConstants.TWO_PANE);
             setAdapter();
             setIngredients();
         }
@@ -62,7 +65,6 @@ public class RecipeIngredients extends Fragment implements StepsAdapter.StepsCli
 
     private void setIngredients() {
         List<Ingredients> ingredients = recipe.getIngredients();
-        ingredients.get(0).getIngredient();
         StringBuilder stringBuilder = new StringBuilder();
         for (Ingredients details : ingredients) {
             stringBuilder.append("* ").append(details.getIngredient())
@@ -82,10 +84,22 @@ public class RecipeIngredients extends Fragment implements StepsAdapter.StepsCli
 
     @Override
     public void stepClickListener(int index) {
-        Intent intent = new Intent(getActivity(), InstructionsActivity.class);
-        intent.putParcelableArrayListExtra(AppConstants.STEPS_PARCELABLE, (ArrayList<? extends Parcelable>) stepsList);
-        intent.putExtra(AppConstants.INDEX, index);
-        startActivity(intent);
+        if (twoPane) {
+            RecipeInstruction recipeInstruction = new RecipeInstruction();
+            Bundle b = new Bundle();
+            b.putParcelableArrayList(AppConstants.STEPS_BUNDLE, (ArrayList<? extends Parcelable>) stepsList);
+            b.putInt(AppConstants.INDEX, index);
+            recipeInstruction.setArguments(b);
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.instructionFragment, recipeInstruction)
+                    .commit();
+        } else {
+            Intent intent = new Intent(getActivity(), InstructionsActivity.class);
+            intent.putParcelableArrayListExtra(AppConstants.STEPS_PARCELABLE, (ArrayList<? extends Parcelable>) stepsList);
+            intent.putExtra(AppConstants.INDEX, index);
+            startActivity(intent);
+        }
     }
 }
 

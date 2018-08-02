@@ -7,4 +7,6 @@
     <string name="steps_label">Description:</string>
     <string name="recipe_image_desc">recipe image</string>
     <string name="serving_icon_desc">serving icon</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

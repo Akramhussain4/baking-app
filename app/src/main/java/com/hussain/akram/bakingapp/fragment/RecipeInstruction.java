@@ -81,13 +81,13 @@ public class RecipeInstruction extends Fragment {
     private void initializePlayer(Uri uri) {
         if (mExoPlayer == null) {
             mPlayerView.setVisibility(View.VISIBLE);
-            SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(
+            mExoPlayer = ExoPlayerFactory.newSimpleInstance(
                     new DefaultRenderersFactory(getContext()),
                     new DefaultTrackSelector(), new DefaultLoadControl());
             MediaSource mediaSource = buildMediaSource(uri);
-            player.prepare(mediaSource, true, false);
-            player.setPlayWhenReady(true);
-            mPlayerView.setPlayer(player);
+            mExoPlayer.prepare(mediaSource, true, false);
+            mExoPlayer.setPlayWhenReady(true);
+            mPlayerView.setPlayer(mExoPlayer);
         }
     }
 
@@ -100,8 +100,8 @@ public class RecipeInstruction extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         releasePlayer();
     }
 
@@ -124,7 +124,7 @@ public class RecipeInstruction extends Fragment {
             FragmentManager fragmentManager = getFragmentManager();
             if (fragmentManager != null) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, recipeInstruction)
+                        .replace(R.id.instructionFragment, recipeInstruction)
                         .commit();
             }
         } else {
@@ -144,7 +144,7 @@ public class RecipeInstruction extends Fragment {
             FragmentManager fragmentManager = getFragmentManager();
             if (fragmentManager != null) {
                 fragmentManager.beginTransaction()
-                        .replace(R.id.fragmentContainer, recipeInstruction)
+                        .replace(R.id.instructionFragment, recipeInstruction)
                         .commit();
             }
         } else {
