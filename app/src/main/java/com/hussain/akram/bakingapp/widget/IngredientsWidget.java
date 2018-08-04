@@ -1,11 +1,19 @@
 package com.hussain.akram.bakingapp.widget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.hussain.akram.bakingapp.Prefs;
 import com.hussain.akram.bakingapp.R;
+import com.hussain.akram.bakingapp.activity.MainActivity;
+import com.hussain.akram.bakingapp.activity.RecipeActivity;
+import com.hussain.akram.bakingapp.model.Recipe;
+
+import java.util.List;
 
 /**
  * Implementation of App Widget functionality.
@@ -14,14 +22,29 @@ public class IngredientsWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
-
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
-        // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
 
-        // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        List<Recipe> recipe = Prefs.loadRecipe(context);
+        if (recipe != null) {
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
+
+            for (Recipe rec : recipe){
+                views.setTextViewText(R.id.recipe_widget_name_text, rec.getName());
+            }
+
+            views.setOnClickPendingIntent(R.id.recipe_widget_name_text, pendingIntent);
+            Intent intent = new Intent(context, RecipeActivity.class);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            views.setRemoteAdapter(R.id.recipe_widget_listview, intent);
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.recipe_widget_listview);
+        }
+    }
+
+    public static void updateAppWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
+        }
     }
 
     @Override

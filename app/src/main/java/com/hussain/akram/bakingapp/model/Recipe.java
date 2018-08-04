@@ -1,15 +1,25 @@
 package com.hussain.akram.bakingapp.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverters;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.PluralsRes;
 
 import com.google.gson.annotations.SerializedName;
+import com.hussain.akram.bakingapp.database.IngredientTypeConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity(tableName = "recipe")
 public class Recipe implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int _id;
     @SerializedName("id")
     private String recipeId;
     @SerializedName("name")
@@ -136,4 +146,12 @@ public class Recipe implements Parcelable {
             return new Recipe[size];
         }
     };
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
 }

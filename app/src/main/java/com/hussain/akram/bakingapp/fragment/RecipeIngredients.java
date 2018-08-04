@@ -9,9 +9,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hussain.akram.bakingapp.R;
 import com.hussain.akram.bakingapp.activity.InstructionsActivity;
@@ -20,6 +24,7 @@ import com.hussain.akram.bakingapp.model.Ingredients;
 import com.hussain.akram.bakingapp.model.Recipe;
 import com.hussain.akram.bakingapp.model.Steps;
 import com.hussain.akram.bakingapp.util.AppConstants;
+import com.hussain.akram.bakingapp.widget.AppWidgetService;
 
 import java.util.ArrayList;
 import java.util.List;

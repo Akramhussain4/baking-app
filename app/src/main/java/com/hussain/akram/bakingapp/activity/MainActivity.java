@@ -12,11 +12,13 @@ import android.util.Log;
 
 
 import com.hussain.akram.bakingapp.NetworkInterface.RecipeInterface;
+import com.hussain.akram.bakingapp.Prefs;
 import com.hussain.akram.bakingapp.R;
 import com.hussain.akram.bakingapp.adapter.RecipeAdapter;
 import com.hussain.akram.bakingapp.model.Recipe;
 import com.hussain.akram.bakingapp.util.AppConstants;
 import com.hussain.akram.bakingapp.util.NetworkUtil;
+import com.hussain.akram.bakingapp.widget.AppWidgetService;
 
 import java.util.List;
 
@@ -69,6 +71,10 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                 recipe = response.body();
                 RecipeAdapter adapter = new RecipeAdapter(recipe, getApplicationContext(),MainActivity.this);
                 recyclerView.setAdapter(adapter);
+                if (Prefs.loadRecipe(getApplicationContext()) == null) {
+                    AppWidgetService.updateWidget(getApplicationContext(), recipe.get(0));
+                }
+
             }
 
             @Override
