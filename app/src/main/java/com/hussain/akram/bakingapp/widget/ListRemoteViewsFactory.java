@@ -20,16 +20,14 @@ import android.content.Context;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.hussain.akram.bakingapp.Prefs;
+import com.hussain.akram.bakingapp.util.SharedPrefUtil;
 import com.hussain.akram.bakingapp.R;
 import com.hussain.akram.bakingapp.model.Recipe;
-
-import java.util.List;
 
 
 public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private Context mContext;
-    private List<Recipe> recipe;
+    private Recipe recipe;
 
     public ListRemoteViewsFactory(Context context) {
         this.mContext = context;
@@ -42,7 +40,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public void onDataSetChanged() {
-        recipe = Prefs.loadRecipe(mContext);
+        recipe = SharedPrefUtil.loadRecipe(mContext);
     }
 
     @Override
@@ -52,13 +50,13 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public int getCount() {
-        return recipe.size();
+        return recipe.getIngredients().size();
     }
 
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews row = new RemoteViews(mContext.getPackageName(), R.layout.baking_recipes_app_widget_list_item);
-        row.setTextViewText(R.id.ingredient_item_text, recipe.get(position).getName());
+        row.setTextViewText(R.id.ingredient_item_text, recipe.getIngredients().get(position).getIngredient());
         return row;
     }
 

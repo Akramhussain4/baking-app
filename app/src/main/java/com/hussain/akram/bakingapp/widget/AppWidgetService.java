@@ -22,15 +22,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViewsService;
 
-import com.hussain.akram.bakingapp.Prefs;
+import com.hussain.akram.bakingapp.util.SharedPrefUtil;
 import com.hussain.akram.bakingapp.model.Recipe;
 
 
 public class AppWidgetService extends RemoteViewsService {
 
     public static void updateWidget(Context context, Recipe recipe) {
-        Prefs.saveRecipe(context, recipe);
-
+        SharedPrefUtil.saveRecipe(context, recipe);
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, IngredientsWidget.class));
         IngredientsWidget.updateAppWidgets(context, appWidgetManager, appWidgetIds);

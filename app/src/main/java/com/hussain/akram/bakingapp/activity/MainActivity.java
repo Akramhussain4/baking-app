@@ -6,13 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 
 import com.hussain.akram.bakingapp.NetworkInterface.RecipeInterface;
-import com.hussain.akram.bakingapp.Prefs;
+import com.hussain.akram.bakingapp.util.SharedPrefUtil;
 import com.hussain.akram.bakingapp.R;
 import com.hussain.akram.bakingapp.adapter.RecipeAdapter;
 import com.hussain.akram.bakingapp.model.Recipe;
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                 recipe = response.body();
                 RecipeAdapter adapter = new RecipeAdapter(recipe, getApplicationContext(),MainActivity.this);
                 recyclerView.setAdapter(adapter);
-                if (Prefs.loadRecipe(getApplicationContext()) == null) {
+                if (SharedPrefUtil.loadRecipe(getApplicationContext()) == null) {
                     AppWidgetService.updateWidget(getApplicationContext(), recipe.get(0));
                 }
 
