@@ -56,7 +56,7 @@ public class RecipeInstruction extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_instruction, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -66,7 +66,7 @@ public class RecipeInstruction extends Fragment {
         loadData();
     }
 
-    private void loadData(){
+    private void loadData() {
         if (this.getArguments() != null) {
             steps = getArguments().getParcelableArrayList(AppConstants.STEPS_BUNDLE);
             index = getArguments().getInt(AppConstants.INDEX, 0);
@@ -151,5 +151,4 @@ public class RecipeInstruction extends Fragment {
             backwardArrow.setVisibility(View.GONE);
         }
     }
-
 }

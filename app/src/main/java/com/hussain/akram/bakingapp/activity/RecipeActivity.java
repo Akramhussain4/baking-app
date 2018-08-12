@@ -68,7 +68,7 @@ public class RecipeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_to_widget) {
             AppWidgetService.updateWidget(this, recipe);
-            Toast.makeText(this,"Added Widget",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.added_to_widget_text, Toast.LENGTH_SHORT).show();
             return true;
         } else
             return super.onOptionsItemSelected(item);
@@ -82,13 +82,12 @@ public class RecipeActivity extends AppCompatActivity {
         }
     }
 
-    private void startFragment(){
+    private void startFragment() {
         RecipeIngredients recipeIngredients = new RecipeIngredients();
-        b.putBoolean(AppConstants.TWO_PANE,twoPane);
+        b.putBoolean(AppConstants.TWO_PANE, twoPane);
         recipeIngredients.setArguments(b);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.recipeFragment, recipeIngredients).commit();
     }
-
 }

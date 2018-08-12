@@ -74,5 +74,4 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.StepsViewHol
             stepsClickListener.stepClickListener(getAdapterPosition());
         }
     }
-
 }

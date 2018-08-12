@@ -40,7 +40,7 @@ public class InstructionsActivity extends AppCompatActivity {
         }
     }
 
-    private void startFragment(){
+    private void startFragment() {
         RecipeInstruction recipeInstruction = new RecipeInstruction();
         Bundle b = new Bundle();
         b.putParcelableArrayList(AppConstants.STEPS_BUNDLE, (ArrayList<? extends Parcelable>) stepsList);
@@ -51,5 +51,4 @@ public class InstructionsActivity extends AppCompatActivity {
                 .replace(R.id.instructionFragment, recipeInstruction)
                 .commit();
     }
-
 }

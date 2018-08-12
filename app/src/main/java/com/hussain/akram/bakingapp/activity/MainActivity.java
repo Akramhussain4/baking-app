@@ -2,21 +2,24 @@ package com.hussain.akram.bakingapp.activity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-
-import com.hussain.akram.bakingapp.NetworkInterface.RecipeInterface;
-import com.hussain.akram.bakingapp.util.SharedPrefUtil;
 import com.hussain.akram.bakingapp.R;
 import com.hussain.akram.bakingapp.adapter.RecipeAdapter;
+import com.hussain.akram.bakingapp.idlingResource.SimpleIdlingResource;
 import com.hussain.akram.bakingapp.model.Recipe;
+import com.hussain.akram.bakingapp.networkInterface.RecipeInterface;
 import com.hussain.akram.bakingapp.util.AppConstants;
 import com.hussain.akram.bakingapp.util.NetworkUtil;
+import com.hussain.akram.bakingapp.util.SharedPrefUtil;
 import com.hussain.akram.bakingapp.widget.AppWidgetService;
 
 import java.util.List;
@@ -34,13 +37,15 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private List<Recipe> recipe;
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        GridLayoutManager layoutManager = new GridLayoutManager(this,getSpan());
+        GridLayoutManager layoutManager = new GridLayoutManager(this, getSpan());
         recyclerView.setLayoutManager(layoutManager);
         checkNetwork();
     }
@@ -62,18 +67,20 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
 
     private void getRecipes() {
+        final SimpleIdlingResource idlingResource = new SimpleIdlingResource();
+        idlingResource.setIdleState(false);
         final RecipeInterface recipeInterface = NetworkUtil.buildUrl().create(RecipeInterface.class);
         Call<List<Recipe>> getRecipe = recipeInterface.getRecipe();
         getRecipe.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                 recipe = response.body();
-                RecipeAdapter adapter = new RecipeAdapter(recipe, getApplicationContext(),MainActivity.this);
+                RecipeAdapter adapter = new RecipeAdapter(recipe, getApplicationContext(), MainActivity.this);
                 recyclerView.setAdapter(adapter);
                 if (SharedPrefUtil.loadRecipe(getApplicationContext()) == null) {
                     AppWidgetService.updateWidget(getApplicationContext(), recipe.get(0));
                 }
-
+                idlingResource.setIdleState(true);
             }
 
             @Override
@@ -90,5 +97,14 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         bundle.putParcelable(AppConstants.RECIPE_PARCELABLE, recipe.get(index));
         intent.putExtra(AppConstants.RECIPE_BUNDLE, bundle);
         startActivity(intent);
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
     }
 }

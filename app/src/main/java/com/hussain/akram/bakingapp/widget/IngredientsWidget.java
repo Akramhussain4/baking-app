@@ -12,10 +12,8 @@ import com.hussain.akram.bakingapp.R;
 import com.hussain.akram.bakingapp.activity.MainActivity;
 import com.hussain.akram.bakingapp.model.Recipe;
 
-/**
- * Implementation of App Widget functionality.
- */
 public class IngredientsWidget extends AppWidgetProvider {
+
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                        int appWidgetId) {
 

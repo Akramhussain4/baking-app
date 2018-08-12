@@ -22,8 +22,6 @@ import butterknife.ButterKnife;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-    private static final String TAG = RecipeAdapter.class.getName();
-
     private final List<Recipe> mRecipes;
     private final RecipeClickListener mRecipeClickListener;
     private final Context mContext;
@@ -48,7 +46,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder recipeViewHolder, int i) {
-        recipeViewHolder.binding.setVariable(com.hussain.akram.bakingapp.BR.recipe,mRecipes.get(i));
+        recipeViewHolder.binding.setVariable(com.hussain.akram.bakingapp.BR.recipe, mRecipes.get(i));
         recipeViewHolder.binding.executePendingBindings();
         GlideApp.with(mContext)
                 .load(mRecipes.get(i).getImage())
@@ -81,5 +79,4 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             mRecipeClickListener.recipeIndex(getAdapterPosition());
         }
     }
-
 }
