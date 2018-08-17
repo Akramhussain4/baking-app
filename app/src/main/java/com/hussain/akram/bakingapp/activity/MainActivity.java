@@ -20,7 +20,7 @@ import com.hussain.akram.bakingapp.networkInterface.RecipeInterface;
 import com.hussain.akram.bakingapp.util.AppConstants;
 import com.hussain.akram.bakingapp.util.NetworkUtil;
 import com.hussain.akram.bakingapp.util.SharedPrefUtil;
-import com.hussain.akram.bakingapp.widget.AppWidgetService;
+import com.hussain.akram.bakingapp.widget.WidgetService;
 
 import java.util.List;
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                 RecipeAdapter adapter = new RecipeAdapter(recipe, getApplicationContext(), MainActivity.this);
                 recyclerView.setAdapter(adapter);
                 if (SharedPrefUtil.loadRecipe(getApplicationContext()) == null) {
-                    AppWidgetService.updateWidget(getApplicationContext(), recipe.get(0));
+                    WidgetService.updateWidget(getApplicationContext(), recipe.get(0));
                 }
                 idlingResource.setIdleState(true);
             }

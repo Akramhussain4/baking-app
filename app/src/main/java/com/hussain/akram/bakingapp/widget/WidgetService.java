@@ -26,7 +26,7 @@ import com.hussain.akram.bakingapp.util.SharedPrefUtil;
 import com.hussain.akram.bakingapp.model.Recipe;
 
 
-public class AppWidgetService extends RemoteViewsService {
+public class WidgetService extends RemoteViewsService {
 
     public static void updateWidget(Context context, Recipe recipe) {
         SharedPrefUtil.saveRecipe(context, recipe);

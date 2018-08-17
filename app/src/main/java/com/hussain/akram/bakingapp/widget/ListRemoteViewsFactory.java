@@ -26,6 +26,7 @@ import com.hussain.akram.bakingapp.model.Recipe;
 
 
 public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
+
     private Context mContext;
     private Recipe recipe;
 
@@ -55,7 +56,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public RemoteViews getViewAt(int position) {
-        RemoteViews row = new RemoteViews(mContext.getPackageName(), R.layout.baking_recipes_app_widget_list_item);
+        RemoteViews row = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_item);
         row.setTextViewText(R.id.ingredient_item_text, recipe.getIngredients().get(position).getIngredient());
         return row;
     }

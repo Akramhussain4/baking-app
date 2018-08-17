@@ -7,4 +7,5 @@
     <string name="serving_icon_desc">serving icon</string>
     <string name="add_widget">Add widget</string>
     <string name="added_to_widget_text">Added Widget</string>
+    <string name="no_data_available">No data Available</string>
 </resources>

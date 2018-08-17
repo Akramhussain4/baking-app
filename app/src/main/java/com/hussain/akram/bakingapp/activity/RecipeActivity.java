@@ -10,14 +10,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.hussain.akram.bakingapp.R;
-
 import com.hussain.akram.bakingapp.fragment.RecipeIngredients;
 import com.hussain.akram.bakingapp.fragment.RecipeInstruction;
 import com.hussain.akram.bakingapp.model.Recipe;
 import com.hussain.akram.bakingapp.model.Steps;
 import com.hussain.akram.bakingapp.util.AppConstants;
 import com.hussain.akram.bakingapp.util.NetworkUtil;
-import com.hussain.akram.bakingapp.widget.AppWidgetService;
+import com.hussain.akram.bakingapp.widget.WidgetService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +66,7 @@ public class RecipeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_to_widget) {
-            AppWidgetService.updateWidget(this, recipe);
+            WidgetService.updateWidget(this, recipe);
             Toast.makeText(this, R.string.added_to_widget_text, Toast.LENGTH_SHORT).show();
             return true;
         } else

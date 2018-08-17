@@ -1,8 +1,6 @@
 package com.hussain.akram.bakingapp;
 
-
 import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -20,20 +18,15 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-
 @RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
+public class StepsTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public ActivityTestRule<RecipeActivity> activityTestRule = new ActivityTestRule<>(RecipeActivity.class);
 
     @Test
-    public void recyclerViewCheck() {
-        Intents.init();
-        onView(withId(R.id.recyclerView)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
-        intended(hasComponent(RecipeActivity.class.getName()));
+    public void fragmentDataCheck(){
         onView(withId(R.id.rvSteps)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
         intended(hasComponent(InstructionsActivity.class.getName()));
-        Intents.release();
     }
 }

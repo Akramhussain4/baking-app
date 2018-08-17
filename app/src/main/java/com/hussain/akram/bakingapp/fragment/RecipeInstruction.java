@@ -46,10 +46,25 @@ public class RecipeInstruction extends Fragment {
     private SimpleExoPlayer mExoPlayer;
     private List<Steps> steps;
     private int index;
+    private long playerPosition;
+    private boolean getPlayerWhenReady;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            index = savedInstanceState.getInt(AppConstants.INDEX);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt(AppConstants.INDEX, index);
+        playerPosition = mExoPlayer.getCurrentPosition();
+        outState.putLong(AppConstants.PLAYER_POSITION, playerPosition);
+        getPlayerWhenReady = mExoPlayer.getPlayWhenReady();
+        outState.putBoolean(AppConstants.PLAY_WHEN_READY, getPlayerWhenReady);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -57,13 +72,14 @@ public class RecipeInstruction extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_instruction, container, false);
         ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         loadData();
+        if (savedInstanceState != null) {
+            playerPosition = savedInstanceState.getLong(AppConstants.PLAYER_POSITION);
+            getPlayerWhenReady = savedInstanceState.getBoolean(AppConstants.PLAY_WHEN_READY);
+            mExoPlayer.seekTo(playerPosition);
+            mExoPlayer.setPlayWhenReady(getPlayerWhenReady);
+        }
+        return view;
     }
 
     private void loadData() {
