@@ -34,12 +34,17 @@ public class RecipeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
         b = getIntent().getBundleExtra(AppConstants.RECIPE_BUNDLE);
-        recipe = b.getParcelable(AppConstants.RECIPE_PARCELABLE);
+        if (b != null) {
+            recipe = b.getParcelable(AppConstants.RECIPE_PARCELABLE);
+        }
         ButterKnife.bind(this);
         if (findViewById(R.id.twoPaneLayout) != null) {
             twoPane = true;
             Recipe recipe = b.getParcelable(AppConstants.RECIPE_PARCELABLE);
-            List<Steps> stepsList = recipe.getSteps();
+            List<Steps> stepsList = null;
+            if (recipe != null) {
+                stepsList = recipe.getSteps();
+            }
             RecipeInstruction recipeInstruction = new RecipeInstruction();
             Bundle b = new Bundle();
             b.putParcelableArrayList(AppConstants.STEPS_BUNDLE, (ArrayList<? extends Parcelable>) stepsList);
@@ -83,7 +88,9 @@ public class RecipeActivity extends AppCompatActivity {
 
     private void startFragment() {
         RecipeIngredients recipeIngredients = new RecipeIngredients();
-        b.putBoolean(AppConstants.TWO_PANE, twoPane);
+        if (b != null) {
+            b.putBoolean(AppConstants.TWO_PANE, twoPane);
+        }
         recipeIngredients.setArguments(b);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()

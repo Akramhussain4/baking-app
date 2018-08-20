@@ -40,6 +40,11 @@ public class InstructionsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private void startFragment() {
         RecipeInstruction recipeInstruction = new RecipeInstruction();
         Bundle b = new Bundle();
